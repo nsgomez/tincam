@@ -1,0 +1,39 @@
+#!/bin/sh
+# /etc/init.d/tincam
+
+### BEGIN INIT INFO
+# Provides:          tincam
+# Required-Start:    networking
+# Required-Stop:     networking
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Launches the TinCam script
+# Description:       Launches the TinCam script
+### END INIT INFO
+
+# Carry out specific functions when asked to by the system
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+    log_daemon_msg "Starting tincam"
+    # run application you want to start
+    (sleep 15)
+    python /usr/local/bin/tincam.py
+    log_end_msg $?
+    ;;
+  stop)
+    log_daemon_msg "Stopping tincam"
+    # kill application you want to stop
+    killall python
+    log_end_msg $?
+    ;;
+  *)
+    echo "Usage: /etc/init.d/tincam {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
